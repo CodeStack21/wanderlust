@@ -1,3 +1,11 @@
+const dns = require("node:dns");
+
+// Fix MongoDB Atlas DNS resolution
+dns.setServers([
+  "8.8.8.8", // Google's primary public DNS server.
+  "8.8.4.4" // Google's secondary public DNS server.
+]);
+
 if(process.env.NODE_ENV != "production"){
     require("dotenv").config()
 }
@@ -84,6 +92,7 @@ app.use((req, res, next) => {
 app.get("/",(req,res)=>{
     res.redirect("/listings");
 })
+
 
 // Routes
 app.use("/listings",listingRouter)
